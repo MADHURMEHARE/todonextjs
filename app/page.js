@@ -26,7 +26,7 @@ export default function TodoApp() {
     return () => clearInterval(interval);
   }, []);
 
-  
+
   const addTask = () => {
     if (!newTask || !taskTime) return;
     setTasks([
@@ -42,7 +42,7 @@ export default function TodoApp() {
     setTasks(tasks.filter((t) => t.id !== id));
   };
 
-  
+
   const editTask = (id, newText) => {
     setTasks(
       tasks.map((t) =>
