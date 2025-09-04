@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Enhanced Todo App with Reminder System
 
-## Getting Started
+A feature-rich todo application with advanced reminder functionality built with Next.js.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 🎯 Core Todo Features
+- Add, edit, and delete tasks
+- Set custom reminder times for each task
+- Visual task management with status indicators
+
+### ⏰ Advanced Reminder System
+- **Browser Notifications**: Native browser notifications with action buttons
+- **Smart Reminder Logic**: Automatic detection of due reminders
+- **Snooze Functionality**: Snooze reminders for 5 minutes or custom duration
+- **Visual Priority Indicators**: Color-coded task borders based on urgency
+- **Time Remaining Display**: Shows countdown until reminder is due
+- **Overdue Task Management**: Special handling for overdue tasks
+
+### 🎨 Enhanced UI/UX
+- **Reminder Manager Component**: Dedicated section for upcoming and overdue reminders
+- **Status Colors**: 
+  - 🟢 Green: Future reminders
+  - 🟡 Yellow: Due within 15 minutes
+  - 🟠 Orange: Due within 5 minutes
+  - 🔴 Red: Overdue
+- **Responsive Design**: Works on desktop and mobile devices
+
+### 💾 Data Persistence
+- **Local Storage**: Tasks persist between browser sessions
+- **Automatic Saving**: Changes are saved immediately
+- **Data Recovery**: Tasks are restored on page reload
+
+## Technical Implementation
+
+### Reminder System Architecture
+1. **Permission Management**: Requests notification permissions on app load
+2. **Time Tracking**: Continuous monitoring of task times (every 10 seconds)
+3. **Notification Handling**: Browser notifications with fallback to alerts
+4. **Action Processing**: Handle snooze and complete actions from notifications
+
+### Key Components
+- `ReminderManager.js`: Dedicated component for reminder management
+- `reminderUtils.js`: Utility functions for reminder operations
+- Enhanced main page with integrated reminder functionality
+
+### Browser Compatibility
+- **Notifications**: Modern browsers with notification support
+- **Fallback**: Alert dialogs for browsers without notification support
+- **Local Storage**: Persistent data storage across sessions
+
+## Usage
+
+### Adding a Task with Reminder
+1. Enter task description in the text field
+2. Select date and time for the reminder
+3. Click "Add" to create the task
+4. The system will automatically schedule the reminder
+
+### Managing Reminders
+- **Snooze**: Click the ⏰ button to snooze a reminder for 5 minutes
+- **Complete**: Click "Complete" in notification or delete the task
+- **Edit**: Modify task text or time as needed
+- **Delete**: Remove tasks from the list
+
+### Notification Actions
+When a reminder triggers:
+- **Snooze 5 min**: Delays the reminder by 5 minutes
+- **Mark Complete**: Removes the task from the list
+- **Click notification**: Focuses the app window
+
+## Setup and Installation
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+4. Grant notification permissions when prompted
+
+## File Structure
+
+```
+todoapp/
+├── app/
+│   ├── page.js                 # Main application with enhanced reminder logic
+│   └── todo/[id]/page.js      # Individual task detail page
+├── components/
+│   ├── ReminderManager.js     # Dedicated reminder management component
+│   ├── TodoApp.js            # Original todo app component
+│   ├── TodoHeader.js         # Header component
+│   ├── TodoInput.js          # Input component
+│   ├── TodoItem.js           # Individual task item
+│   └── TodoList.js           # Task list component
+├── utils/
+│   └── reminderUtils.js      # Utility functions for reminder operations
+└── public/
+    ├── reminder.png          # Reminder notification icon
+    └── background.jpg        # App background image
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Future Enhancements
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Recurring reminders
+- [ ] Multiple reminder times per task
+- [ ] Sound notifications
+- [ ] Calendar integration
+- [ ] Email reminders
+- [ ] Mobile push notifications
+- [ ] Task categories and tags
+- [ ] Export/import functionality
