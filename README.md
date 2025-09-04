@@ -1,73 +1,55 @@
-# Enhanced Todo App with Reminder System
+# Component-Based Todo App with Simple Reminder System
 
-A feature-rich todo application with advanced reminder functionality built with Next.js.
+A clean, component-based todo application with basic reminder functionality built with Next.js.
 
 ## Features
 
 ### 🎯 Core Todo Features
 - Add, edit, and delete tasks
 - Set custom reminder times for each task
-- Visual task management with status indicators
+- Clean component-based architecture
 
-### ⏰ Advanced Reminder System
-- **Browser Notifications**: Native browser notifications with action buttons
-- **Smart Reminder Logic**: Automatic detection of due reminders
-- **Snooze Functionality**: Snooze reminders for 5 minutes or custom duration
-- **Visual Priority Indicators**: Color-coded task borders based on urgency
-- **Time Remaining Display**: Shows countdown until reminder is due
-- **Overdue Task Management**: Special handling for overdue tasks
+### ⏰ Simple Reminder System
+- **Basic Timing**: Checks every 30 seconds for due tasks
+- **Simple Notification**: Shows browser notification or alert when time is up
+- **One-time Reminder**: Each task gets reminded only once when its time comes
 
-### 🎨 Enhanced UI/UX
-- **Reminder Manager Component**: Dedicated section for upcoming and overdue reminders
-- **Status Colors**: 
-  - 🟢 Green: Future reminders
-  - 🟡 Yellow: Due within 15 minutes
-  - 🟠 Orange: Due within 5 minutes
-  - 🔴 Red: Overdue
-- **Responsive Design**: Works on desktop and mobile devices
+## Component Structure
 
-### 💾 Data Persistence
-- **Local Storage**: Tasks persist between browser sessions
-- **Automatic Saving**: Changes are saved immediately
-- **Data Recovery**: Tasks are restored on page reload
+### 📦 Components
+- **`TodoHeader.js`** - App title display
+- **`TodoInput.js`** - Task input form with time picker
+- **`TodoItem.js`** - Individual task display with edit/delete
+- **`TodoList.js`** - Container for all task items
+- **`TodoApp.js`** - Main app with state management and reminder logic
 
-## Technical Implementation
+### 📄 Pages
+- **`app/page.js`** - Main page that renders TodoApp component
+- **`app/todo/[id]/page.js`** - Individual task detail page
 
-### Reminder System Architecture
-1. **Permission Management**: Requests notification permissions on app load
-2. **Time Tracking**: Continuous monitoring of task times (every 10 seconds)
-3. **Notification Handling**: Browser notifications with fallback to alerts
-4. **Action Processing**: Handle snooze and complete actions from notifications
+## File Structure
+```
+todoapp/
+├── app/
+│   ├── page.js                 # Main page (renders TodoApp)
+│   └── todo/[id]/page.js       # Individual task detail page
+├── components/
+│   ├── TodoApp.js             # Main app logic & state management
+│   ├── TodoHeader.js          # App title
+│   ├── TodoInput.js           # Task input form
+│   ├── TodoItem.js            # Individual task display
+│   └── TodoList.js            # Task list container
+└── public/
+    ├── reminder.png           # Reminder notification icon
+    └── background.jpg         # App background image
+```
 
-### Key Components
-- `ReminderManager.js`: Dedicated component for reminder management
-- `reminderUtils.js`: Utility functions for reminder operations
-- Enhanced main page with integrated reminder functionality
+## How It Works
 
-### Browser Compatibility
-- **Notifications**: Modern browsers with notification support
-- **Fallback**: Alert dialogs for browsers without notification support
-- **Local Storage**: Persistent data storage across sessions
-
-## Usage
-
-### Adding a Task with Reminder
-1. Enter task description in the text field
-2. Select date and time for the reminder
-3. Click "Add" to create the task
-4. The system will automatically schedule the reminder
-
-### Managing Reminders
-- **Snooze**: Click the ⏰ button to snooze a reminder for 5 minutes
-- **Complete**: Click "Complete" in notification or delete the task
-- **Edit**: Modify task text or time as needed
-- **Delete**: Remove tasks from the list
-
-### Notification Actions
-When a reminder triggers:
-- **Snooze 5 min**: Delays the reminder by 5 minutes
-- **Mark Complete**: Removes the task from the list
-- **Click notification**: Focuses the app window
+1. **Add Task**: Enter task text and select future time
+2. **Monitor**: App checks every 30 seconds for due tasks
+3. **Notify**: Shows simple notification when task time arrives
+4. **Manage**: Edit or delete tasks as needed
 
 ## Setup and Installation
 
@@ -85,34 +67,9 @@ When a reminder triggers:
 
 4. Grant notification permissions when prompted
 
-## File Structure
+## Simple Reminder Logic
 
-```
-todoapp/
-├── app/
-│   ├── page.js                 # Main application with enhanced reminder logic
-│   └── todo/[id]/page.js      # Individual task detail page
-├── components/
-│   ├── ReminderManager.js     # Dedicated reminder management component
-│   ├── TodoApp.js            # Original todo app component
-│   ├── TodoHeader.js         # Header component
-│   ├── TodoInput.js          # Input component
-│   ├── TodoItem.js           # Individual task item
-│   └── TodoList.js           # Task list component
-├── utils/
-│   └── reminderUtils.js      # Utility functions for reminder operations
-└── public/
-    ├── reminder.png          # Reminder notification icon
-    └── background.jpg        # App background image
-```
-
-## Future Enhancements
-
-- [ ] Recurring reminders
-- [ ] Multiple reminder times per task
-- [ ] Sound notifications
-- [ ] Calendar integration
-- [ ] Email reminders
-- [ ] Mobile push notifications
-- [ ] Task categories and tags
-- [ ] Export/import functionality
+- Checks every 30 seconds for tasks due within 1 minute
+- Shows browser notification if available, otherwise alert
+- Marks tasks as "reminderTriggered" to avoid duplicate notifications
+- No complex features - just basic timing and notification
