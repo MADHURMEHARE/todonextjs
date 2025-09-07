@@ -108,11 +108,11 @@ export default function TodoApp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-pink-400 via-purple-500 to-purple-700 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-pink-purple relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-10 right-10 w-32 h-32 bg-white bg-opacity-10 rounded-full"></div>
-      <div className="absolute bottom-20 left-10 w-24 h-24 bg-white bg-opacity-10 rounded-full"></div>
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
+      <div className="absolute top-10 right-10 w-32 h-32 bg-white bg-opacity-10 rounded-full animate-float"></div>
+      <div className="absolute bottom-20 left-10 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
       
       <div className="relative z-10 min-h-screen flex items-center justify-center p-8">
         <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -130,10 +130,10 @@ export default function TodoApp() {
           
           {/* Right Side - Title and Add Button */}
           <div className="order-1 lg:order-2 text-center lg:text-left">
-            <h1 className="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in">
               Todo List
             </h1>
-            <p className="text-xl text-white text-opacity-90 mb-8 font-medium">
+            <p className="text-xl text-white text-opacity-90 mb-8 font-medium animate-slide-in">
               Simple Design Using React, TypeScript & Tailwind
             </p>
             
