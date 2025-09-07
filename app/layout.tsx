@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ReactNode } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,12 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "todoapp",
-  description: "todoapp is made by nextjs",
-  keyword:"todo"
+  title: "Todo App with Reminders",
+  description: "A modern todo app with reminder functionality built with Next.js, TypeScript, and Tailwind CSS",
+  keywords: "todo, reminders, productivity, nextjs, typescript, tailwind"
 };
 
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body

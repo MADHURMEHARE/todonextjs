@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import TodoHeader from "./TodoHeader";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
+import { Task } from '@/types/todo';
 
 export default function TodoApp() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState("");
-  const [taskTime, setTaskTime] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState<string>("");
+  const [taskTime, setTaskTime] = useState<string>("");
 
   // Simple reminder check
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function TodoApp() {
     }
   }, []);
 
-  const addTask = () => {
+  const addTask = (): void => {
     if (!newTask || !taskTime) return;
     
     const taskTimeDate = new Date(taskTime);
@@ -62,7 +63,7 @@ export default function TodoApp() {
       return;
     }
     
-    const newTaskObj = { 
+    const newTaskObj: Task = { 
       id: Date.now(), 
       text: newTask, 
       time: taskTime,
@@ -74,11 +75,11 @@ export default function TodoApp() {
     setTaskTime("");
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = (id: number): void => {
     setTasks(tasks.filter((t) => t.id !== id));
   };
 
-  const editTask = (id, newText) => {
+  const editTask = (id: number, newText: string): void => {
     setTasks(
       tasks.map((t) =>
         t.id === id ? { ...t, text: newText } : t
@@ -87,18 +88,11 @@ export default function TodoApp() {
   };
 
   return (
-    <div style={{ backgroundImage: "url('/background.jpg')", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", }}>
-      <div
-        style={{
-          maxWidth: "600px",
-          margin: "20px auto",
-          padding: "20px",
-          border: "2px solid black",
-          borderRadius: "8px",
-          backgroundColor: "rgba(0,0,0,0.1)",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-        }}
-      >
+    <div 
+      className="min-h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/background.jpg')" }}
+    >
+      <div className="max-w-2xl mx-auto p-6 border-2 border-gray-800 rounded-lg bg-white bg-opacity-90 shadow-xl backdrop-blur-sm">
         <TodoHeader />
         <TodoInput
           newTask={newTask}
