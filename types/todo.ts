@@ -3,6 +3,7 @@ export interface Task {
   text: string;
   time: string;
   reminderTriggered: boolean;
+  completed?: boolean;
 }
 
 export interface TodoInputProps {

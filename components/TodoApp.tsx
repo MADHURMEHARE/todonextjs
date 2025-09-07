@@ -9,6 +9,7 @@ export default function TodoApp() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
   const [taskTime, setTaskTime] = useState<string>("");
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
 
   // Simple reminder check
   useEffect(() => {
@@ -67,7 +68,8 @@ export default function TodoApp() {
       id: Date.now(), 
       text: newTask, 
       time: taskTime,
-      reminderTriggered: false
+      reminderTriggered: false,
+      completed: false
     };
     
     setTasks([...tasks, newTaskObj]);
@@ -87,37 +89,47 @@ export default function TodoApp() {
     );
   };
 
+  const toggleComplete = (id: number): void => {
+    setTasks(
+      tasks.map((t) =>
+        t.id === id ? { ...t, completed: !t.completed } : t
+      )
+    );
+  };
+
+  const handleAddTask = () => {
+    setShowAddModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setNewTask("");
+    setTaskTime("");
+  };
+
   return (
-    <div 
-      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50"
-      style={{ backgroundImage: "url('/background.jpg')" }}
-    >
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+    <div className="min-h-screen bg-gray-100">
+      {/* Header */}
+      <TodoHeader onAddTask={handleAddTask} />
       
-      {/* Main content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-4xl">
-          <div className="bg-white bg-opacity-95 backdrop-blur-lg rounded-3xl shadow-2xl border border-white border-opacity-20 overflow-hidden">
-            {/* Header section */}
-            <div className="bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 p-8 text-white">
-              <TodoHeader />
-            </div>
-            
-            {/* Content section */}
-            <div className="p-8">
-              <TodoInput
-                newTask={newTask}
-                setNewTask={setNewTask}
-                taskTime={taskTime}
-                setTaskTime={setTaskTime}
-                addTask={addTask}
-              />
-              <TodoList tasks={tasks} editTask={editTask} deleteTask={deleteTask} />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Task List */}
+      <TodoList 
+        tasks={tasks} 
+        editTask={editTask} 
+        deleteTask={deleteTask}
+        toggleComplete={toggleComplete}
+      />
+      
+      {/* Add Task Modal */}
+      <TodoInput
+        newTask={newTask}
+        setNewTask={setNewTask}
+        taskTime={taskTime}
+        setTaskTime={setTaskTime}
+        addTask={addTask}
+        isVisible={showAddModal}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }

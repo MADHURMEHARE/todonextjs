@@ -1,80 +1,122 @@
 import Link from "next/link";
 import { TodoItemProps } from '@/types/todo';
 
-export default function TodoItem({ task, editTask, deleteTask }: TodoItemProps) {
+// Circular Progress Component
+function CircularProgress({ percentage, size = 40 }: { percentage: number; size?: number }) {
+  const radius = (size - 8) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg className="w-full h-full transform -rotate-90" viewBox={`0 0 ${size} ${size}`}>
+        {/* Background circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#e5e7eb"
+          strokeWidth="3"
+          fill="none"
+        />
+        {/* Progress circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#f97316"
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          className="transition-all duration-300"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-xs font-semibold text-orange-500">{percentage}%</span>
+      </div>
+    </div>
+  );
+}
+
+export default function TodoItem({ task, editTask, deleteTask, toggleComplete }: TodoItemProps & { toggleComplete: (id: number) => void }) {
   const taskDate = new Date(task.time);
   const now = new Date();
   const timeDiff = taskDate.getTime() - now.getTime();
   const isOverdue = timeDiff < 0;
   const isDueSoon = timeDiff > 0 && timeDiff <= 300000; // 5 minutes
+  const isCompleted = task.completed || false;
+  
+  // Calculate progress based on time remaining
+  const totalTime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+  const timeElapsed = Math.max(0, totalTime - timeDiff);
+  const progress = Math.min(100, Math.max(0, (timeElapsed / totalTime) * 100));
 
   return (
-    <li className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-      <div className="p-6">
-        <div className="flex items-start justify-between">
-          {/* Task content */}
+    <li className="bg-white rounded-lg shadow-sm border border-gray-200 mb-3">
+      <div className="p-4">
+        <div className="flex items-center gap-4">
+          {/* Progress/Status Indicator */}
+          <div className="flex-shrink-0">
+            {isCompleted ? (
+              <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            ) : (
+              <CircularProgress percentage={Math.round(progress)} size={40} />
+            )}
+          </div>
+          
+          {/* Task Content */}
           <div className="flex-1 min-w-0">
             <Link
               href={`/todo/${task.id}?text=${encodeURIComponent(task.text)}&time=${task.time}`}
-              className="block hover:text-blue-600 transition-colors duration-200"
+              className="block"
             >
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+              <h3 className={`text-lg font-medium ${isCompleted ? 'line-through text-gray-500' : 'text-gray-800'}`}>
                 {task.text}
               </h3>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className={isOverdue ? "text-red-500 font-medium" : isDueSoon ? "text-orange-500 font-medium" : "text-gray-500"}>
-                  {taskDate.toLocaleString()}
-                </span>
-              </div>
-              
-              {/* Status indicator */}
-              <div className="mt-3">
-                {isOverdue ? (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    Overdue
-                  </span>
-                ) : isDueSoon ? (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                    </svg>
-                    Due Soon
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Scheduled
-                  </span>
-                )}
-              </div>
+              {!isCompleted && (
+                <p className="text-sm text-gray-500 mt-1">
+                  {taskDate.toLocaleDateString()} at {taskDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              )}
             </Link>
           </div>
-
-          {/* Action buttons */}
-          <div className="flex gap-2 ml-4">
+          
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2">
+            {!isCompleted && (
+              <button
+                onClick={() => toggleComplete(task.id)}
+                className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                title="Mark as complete"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </button>
+            )}
+            
             <button
               onClick={() => {
                 const newText = prompt("Edit task:", task.text);
                 if (newText) editTask(task.id, newText);
               }}
-              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group/edit"
+              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
               title="Edit task"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
             </button>
+            
             <button
               onClick={() => deleteTask(task.id)}
-              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 group/delete"
+              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
               title="Delete task"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

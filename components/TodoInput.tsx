@@ -1,44 +1,72 @@
 import { TodoInputProps } from '@/types/todo';
 
-export default function TodoInput({ newTask, setNewTask, taskTime, setTaskTime, addTask }: TodoInputProps) {
+export default function TodoInput({ newTask, setNewTask, taskTime, setTaskTime, addTask, isVisible, onClose }: TodoInputProps & { isVisible: boolean; onClose: () => void }) {
+  if (!isVisible) return null;
+
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Task Description
-          </label>
-          <input
-            type="text"
-            placeholder="What needs to be done?"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-lg"
-          />
-        </div>
-        
-        <div className="sm:w-64">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Reminder Time
-          </label>
-          <input
-            type="datetime-local"
-            value={taskTime}
-            onChange={(e) => setTaskTime(e.target.value)}
-            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-          />
-        </div>
-        
-        <div className="flex items-end">
-          <button
-            onClick={addTask}
-            className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
+        {/* Modal Header */}
+        <div className="bg-orange-500 px-6 py-4 rounded-t-2xl flex items-center justify-between">
+          <h2 className="text-white text-lg font-bold">Add New Task</h2>
+          <button 
+            onClick={onClose}
+            className="text-white hover:bg-orange-600 rounded-lg p-1"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
-            Add Task
           </button>
+        </div>
+        
+        {/* Modal Content */}
+        <div className="p-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Task Name
+              </label>
+              <input
+                type="text"
+                placeholder="Enter task name"
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                autoFocus
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Reminder Time
+              </label>
+              <input
+                type="datetime-local"
+                value={taskTime}
+                onChange={(e) => setTaskTime(e.target.value)}
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+              />
+            </div>
+          </div>
+          
+          {/* Modal Actions */}
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={onClose}
+              className="flex-1 border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                addTask();
+                onClose();
+              }}
+              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Add Task
+            </button>
+          </div>
         </div>
       </div>
     </div>
