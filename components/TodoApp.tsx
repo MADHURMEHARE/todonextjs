@@ -89,19 +89,34 @@ export default function TodoApp() {
 
   return (
     <div 
-      className="min-h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat"
+      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50"
       style={{ backgroundImage: "url('/background.jpg')" }}
     >
-      <div className="max-w-2xl mx-auto p-6 border-2 border-gray-800 rounded-lg bg-white bg-opacity-90 shadow-xl backdrop-blur-sm">
-        <TodoHeader />
-        <TodoInput
-          newTask={newTask}
-          setNewTask={setNewTask}
-          taskTime={taskTime}
-          setTaskTime={setTaskTime}
-          addTask={addTask}
-        />
-        <TodoList tasks={tasks} editTask={editTask} deleteTask={deleteTask} />
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+      
+      {/* Main content */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-4xl">
+          <div className="bg-white bg-opacity-95 backdrop-blur-lg rounded-3xl shadow-2xl border border-white border-opacity-20 overflow-hidden">
+            {/* Header section */}
+            <div className="bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 p-8 text-white">
+              <TodoHeader />
+            </div>
+            
+            {/* Content section */}
+            <div className="p-8">
+              <TodoInput
+                newTask={newTask}
+                setNewTask={setNewTask}
+                taskTime={taskTime}
+                setTaskTime={setTaskTime}
+                addTask={addTask}
+              />
+              <TodoList tasks={tasks} editTask={editTask} deleteTask={deleteTask} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
