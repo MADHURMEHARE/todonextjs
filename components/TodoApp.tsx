@@ -111,18 +111,20 @@ export default function TodoApp() {
     <div className="app-container">
       <div className="main-content">
         <div className="content-wrapper">
-          {/* Main Title */}
-          <div>
-            <h1 className="main-title">
-              Todo List
-            </h1>
-            <p className="subtitle">
-              Simple Design Using React, TypeScript & CSS
-            </p>
+          {/* Main Title Card */}
+          <div className="title-card">
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <h1 className="main-title">
+                Todo List
+              </h1>
+              <p className="subtitle">
+                Simple Design Using React, TypeScript & CSS
+              </p>
+            </div>
           </div>
           
-          {/* Add Task Button */}
-          <div>
+          {/* Add Task Button Card */}
+          <div className="button-card">
             <button 
               onClick={handleAddTask}
               className="add-button"
