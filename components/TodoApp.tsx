@@ -108,37 +108,37 @@ export default function TodoApp() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="min-h-screen flex flex-col items-center justify-center p-8">
-        <div className="w-full max-w-2xl text-center space-y-8">
+    <div className="app-container">
+      <div className="main-content">
+        <div className="content-wrapper">
           {/* Main Title */}
-          <div className="space-y-4">
-            <h1 className="text-5xl lg:text-6xl font-bold text-black">
+          <div>
+            <h1 className="main-title">
               Todo List
             </h1>
-            <p className="text-lg text-black font-normal">
-              Simple Design Using React, TypeScript & Tailwind
+            <p className="subtitle">
+              Simple Design Using React, TypeScript & CSS
             </p>
           </div>
           
           {/* Add Task Button */}
-          <div className="py-4">
+          <div>
             <button 
               onClick={handleAddTask}
-              className="bg-gray-100 border border-black px-8 py-4 rounded-lg font-medium text-black hover:bg-gray-200 transition-colors duration-200 flex items-center gap-4 mx-auto"
+              className="add-button"
             >
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <svg className="add-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
-              <div className="text-left">
-                <div className="text-sm font-medium">Add</div>
-                <div className="text-sm font-medium">New Task</div>
+              <div className="add-button-text">
+                <div>Add</div>
+                <div>New Task</div>
               </div>
             </button>
           </div>
           
           {/* Todo List Card */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div className="todo-card">
             <TodoList 
               tasks={tasks} 
               editTask={editTask} 
