@@ -118,7 +118,7 @@ export default function TodoApp() {
                 Todo List
               </h1>
               <p className="subtitle">
-                Simple Design Using React, TypeScript & CSS
+              
               </p>
             </div>
           </div>
