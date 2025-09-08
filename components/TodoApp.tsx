@@ -108,44 +108,43 @@ export default function TodoApp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-pink-purple relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-10 right-10 w-32 h-32 bg-white bg-opacity-10 rounded-full animate-float"></div>
-      <div className="absolute bottom-20 left-10 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
-      
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-8">
-        <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Todo Card */}
-          <div className="order-2 lg:order-1">
-            <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md mx-auto">
-              <TodoList 
-                tasks={tasks} 
-                editTask={editTask} 
-                deleteTask={deleteTask}
-                toggleComplete={toggleComplete}
-              />
-            </div>
-          </div>
-          
-          {/* Right Side - Title and Add Button */}
-          <div className="order-1 lg:order-2 text-center lg:text-left">
-            <h1 className="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in">
+    <div className="min-h-screen bg-white">
+      <div className="min-h-screen flex flex-col items-center justify-center p-8">
+        <div className="w-full max-w-2xl text-center space-y-8">
+          {/* Main Title */}
+          <div className="space-y-4">
+            <h1 className="text-5xl lg:text-6xl font-bold text-black">
               Todo List
             </h1>
-            <p className="text-xl text-white text-opacity-90 mb-8 font-medium animate-slide-in">
+            <p className="text-lg text-black font-normal">
               Simple Design Using React, TypeScript & Tailwind
             </p>
-            
+          </div>
+          
+          {/* Add Task Button */}
+          <div className="py-4">
             <button 
               onClick={handleAddTask}
-              className="bg-white text-purple-600 px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 mx-auto lg:mx-0"
+              className="bg-gray-100 border border-black px-8 py-4 rounded-lg font-medium text-black hover:bg-gray-200 transition-colors duration-200 flex items-center gap-4 mx-auto"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
-              Add New Task
+              <div className="text-left">
+                <div className="text-sm font-medium">Add</div>
+                <div className="text-sm font-medium">New Task</div>
+              </div>
             </button>
+          </div>
+          
+          {/* Todo List Card */}
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <TodoList 
+              tasks={tasks} 
+              editTask={editTask} 
+              deleteTask={deleteTask}
+              toggleComplete={toggleComplete}
+            />
           </div>
         </div>
       </div>

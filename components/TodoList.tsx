@@ -5,16 +5,13 @@ export default function TodoList({ tasks, editTask, deleteTask, toggleComplete }
   return (
     <div className="w-full">
       {/* Card Title */}
-      <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">To Do List</h2>
-      
-      {/* Divider Line */}
-      <div className="w-full h-px bg-gray-200 mb-6"></div>
+      <h2 className="text-xl font-bold text-black text-center mb-6">To Do List</h2>
       
       {/* Task Items */}
       <div className="space-y-3">
         {tasks.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-500 text-lg">No tasks yet. Add one to get started!</p>
+            <p className="text-black text-base">No tasks yet. Add one to get started!</p>
           </div>
         ) : (
           tasks.map((task, index) => (
